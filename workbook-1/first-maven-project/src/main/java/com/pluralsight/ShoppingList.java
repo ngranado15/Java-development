@@ -3,6 +3,7 @@ package com.pluralsight;
 public class ShoppingList {
 
     public static void main(String[] args){
+        // This is my shopping list
         System.out.println("Item 1");
         System.out.println("Item 2");
         System.out.println("Item 3");
