@@ -19,7 +19,10 @@ public class FullNameApplication {
         System.out.println("Enter suffix, if none hit enter!.");
         String suffix = scan.nextLine();
 
+
+
         System.out.println(firstName+ " " + middleName+ " " + lastName + ", " + suffix);
+
 
     }
 

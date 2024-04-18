@@ -2,124 +2,71 @@ package com.pluralsight;
 
 import java.util.Scanner;
 
+
 public class SandwitchShop {
-
-    static Scanner scan = new Scanner(System.in);
-
-    static double Regular = 5.45;
-    static double Large = 8.95;
-    static int Age;
-    static double Discount;
-    static double Total;
-    static double basePrice;
 
     static public void main(String[] args) {
 
-        System.out.println("What sandwitch size do you want?");
-        System.out.println("Regular or Large?");
-        int Size = scan.nextInt();
-        scan.nextLine();
+        Scanner input = new Scanner(System.in);
+
+
+         int age, size;
+         String loaded;
+
+        System.out.println("What sandwich size do you want?");
+        System.out.println("Enter a size Regular 1: base price 5.45 or Large 2: base price 8.95?");
+        size = input.nextInt();
+        input.nextLine();
+
 
         System.out.println("Loaded? (yes/no)");
-        String loaded = scan.next();
-        scan.nextLine();
+         loaded = input.nextLine();
 
+         System.out.println("Enter your age: ");
+         age = input.nextInt();
+         totalCost(size, loaded, age);
 
-
-        if (Size == Regular && Age >= 17 && loaded.equalsIgnoreCase("no")) {
-            studentReg();
-        } else if (Size == Large && Age >= 17 && loaded.equalsIgnoreCase("no")) {
-            studentLarge();
-        } else if (Size == Regular && Age >= 17 && loaded.equalsIgnoreCase("yes")) {
-            studentLoadedReg();
-        } else if (Size == Large && Age >= 17 && loaded.equalsIgnoreCase("yes")) {
-            studentLoadedLarge();
-        } else if (Size == Regular && Age <= 65 && loaded.equalsIgnoreCase("no")) {
-            seniorReg();
-        } else if (Size == Regular && Age <= 65 && loaded.equalsIgnoreCase("yes")) {
-            seniorLoadedReg();
-        } else if (Size == Large && Age <= 65 && loaded.equalsIgnoreCase("no")) {
-            seniorLarge();
-        } else if (Size == Large && Age <= 65 && loaded.equalsIgnoreCase("yes")) {
-            seniorLoadedLarge();
-        }
-        else {
-            Total = basePrice;
-        }
 
 
     }
 
-        public static void studentReg(){
+  public static void totalCost(int usersChoice, String loaded, int age){
 
-        Discount = Regular *.10;
-        Total = Regular - Discount;
+        double basePrice =0;
+        double discount = 0;
+        double cost = 0;
 
+        if (loaded.equals("yes")){
+            if (usersChoice == 1){
+                basePrice = 6.45;
+            } else if (usersChoice == 2){
+                basePrice = 10.70;
+            } else {
+                basePrice = 0;
+            }
+        } else {
+            if (usersChoice == 1){
+                basePrice = 5.45;
+            } else if (usersChoice == 2){
+                basePrice = 8.95;
+            } else {
+                basePrice = 0;
+            }
         }
 
-    public static void studentLoadedReg(){
+        if (age <= 17){
+            discount = 0.1;
+            cost = basePrice * discount;
+        } else if (age >= 65) {
+            discount = .2;
+            cost = basePrice *discount;
+        } else {
+            cost = basePrice;
+        }
+        System.out.println("The cost of your sandwich is " +cost);
 
-        Discount = Regular + 1 *.10;
-        Total = Regular + 1 - Discount;
+  }
 
-    }
-
-    public static void studentLarge(){
-
-        Discount = Large *.10;
-        Total = Large - Discount;
-
-    }
-
-    public static void studentLoadedLarge(){
-
-        Discount = Large + 1.75 *.10;
-        Total = Large + 1.75 - Discount;
-
-    }
-
-    public static void seniorReg(){
-
-        Discount = Regular *.10;
-        Total = Regular - Discount;
-
-    }
-
-    public static void seniorLarge(){
-
-        Discount = Large *.10;
-        Total = Large - Discount;
-
-    }
-
-
-    public static void seniorLoadedReg(){
-
-        Discount = Regular + 1 *.10;
-        Total = Regular + 1 - Discount;
-
-    }
-
-    public static void seniorLoadedLarge(){
-
-        Discount = Large + 1.75 *.10;
-        Total = Large + 1.75 - Discount;
-
-    }
-
-
-
-public static void basePrice(){
-
-        basePrice = 0;
-
-    }
-
-
-
-public static void printTotal(){
-        System.out.println("The total is $" + Total);
-}
 
 }
 
