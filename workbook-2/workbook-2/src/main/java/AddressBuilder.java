@@ -12,6 +12,17 @@ public class AddressBuilder {
 
 
     }
+
+    public static void address(){
+
+        StringBuilder address = new StringBuilder();
+
+
+
+    }
+
+
+
 }
 
 

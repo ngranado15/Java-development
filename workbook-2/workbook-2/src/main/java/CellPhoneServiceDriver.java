@@ -8,7 +8,7 @@ public class CellPhoneServiceDriver {
         CellPhoneService cp1 = new CellPhoneService();
         System.out.println("What is the serial number?");
         long serial = scan.nextLong();
-        cp1.setSerial();
+       // cp1.setSerial();
         System.out.println();
 
     }

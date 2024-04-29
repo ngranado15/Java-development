@@ -5,19 +5,27 @@ public class FullNameApplication {
     public static void main(String [] args){
         Scanner scan = new Scanner(System.in);
 
+        String firstName, middleName, lastName, suffix, fullName = "";
+
+
         System.out.println("Enter first name.");
-        String firstName = scan.nextLine();
+         firstName = scan.nextLine();
+         firstName = firstName.trim();
 
 
         System.out.println("Enter middle name, if none hit enter!");
-        String middleName = scan.nextLine();
+         middleName = scan.nextLine();
+         middleName = middleName.trim();
 
 
         System.out.println("Enter last name.");
-        String lastName = scan.nextLine();
+         lastName = scan.nextLine();
+         lastName = lastName.trim();
 
-        System.out.println("Enter suffix, if none hit enter!.");
-        String suffix = scan.nextLine();
+        System.out.print("Enter suffix, if none hit enter!.");
+         suffix = scan.nextLine();
+
+
 
 
 
