@@ -82,6 +82,8 @@ public class OnlineStore {
         }
     }
 
+
+
     public static ArrayList<Product> getInventoryOfProducts() {
         ArrayList<Product> inventory = new ArrayList<>();
         try (
