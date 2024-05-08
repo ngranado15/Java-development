@@ -1,10 +1,9 @@
 package com.pluralsight;
 
-import java.io.BufferedWriter;
-import java.io.FileWriter;
-import java.io.IOException;
+import java.io.*;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.time.LocalDateTime;
 import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
 import java.time.temporal.TemporalAccessor;
@@ -13,35 +12,41 @@ import java.util.Date;
 import java.util.Scanner;
 
 
-
 public class AccountingLedgerApplication {
     static Scanner in = new Scanner(System.in);
 
-    public static void main(String[] args) {
-        // Menu
-        ArrayList<Ledger> Ledger = reportScreenInfo();
+    public static void main(String args[]){
+        homeScreen();
+    }
 
+
+    public static void homeScreen() {
+
+        ArrayList<HomeScreen> homeSc = dataCollection();
+
+        //home screen
         System.out.println("Welcome to the accounting ledger!");
-        int command;
+        int select;
         System.out.println("1 - Add Deposit ");
-        double addDeposit;
         System.out.println("2 - Make Payment (Debit) ");
-        double makePayment;
+        int makePayment;
         System.out.println("3 - Ledger ");
+        int ledger;
         System.out.println("4 - Exit");
+        System.out.printlng("Enter one of the numbers above.");
 
+        select = in.nextInt();
 
-        command = in.nextInt();
-        while (command != 5) {
-            switch (command) {
+        while (select != 6) {
+            switch (select) {
                 case 1:
-                    addDeposit(Ledger);
+                    addDeposit(homeSc);
                     break;
                 case 2:
-                    makePayment(Ledger);
+                    makePayment(homeSc);
                     break;
                 case 3:
-                    ledgers();
+                    ledger(homeSc);
                     break;
                 case 4:
                     System.out.println("Welcome to the accounting ledger!");
@@ -49,61 +54,102 @@ public class AccountingLedgerApplication {
                     System.out.println("2 - Make Payment (Debit) ");
                     System.out.println("3 - Ledger ");
                     System.out.println("4 - Exit");
-                    command = in.nextInt();
+                    select = in.nextInt();
                     break;
+
                 case 5:
                     return;
+
+
             }
 
 
         }
 
+
     }
 
-    private static ArrayList<Ledger> reportScreenInfo() {
+    public static ArrayList<HomeScreen> dataCollection() {
 
         return null;
     }
 
 
-    private static void addDeposit(ArrayList<Ledger> homeScreens) {
+    public static void ledger(ArrayList<HomeScreen> homeSc) {
+        Scanner in = new Scanner(System.in);
 
-        System.out.println("How much would you like to deposit?");
-        double depositAmount = in.nextDouble();
+        ArrayList<HomeScreen> ledgerSc = ledgerScReports();
 
-        System.out.println("Enter the date deposit was made (mm/dd/yyyy)");
-        String dateStr = in.next();
-        SimpleDateFormat sdf = new SimpleDateFormat();
-
-
-        System.out.println("Enter the time the deposit was made HH:MM:SS\n");
-       String depositTime = in.nextLine();
-        System.out.println("Enter the description");
-        String depositDescription = in.nextLine();
-        System.out.println("Enter the vendor");
-        String depositVendor = in.nextLine();
-        //try {
-         //   Date date = sdf.parse(dateStr);
-           // System.out.println("input date: " + sdf.format(date));
-        //} catch (ParseException ignored) {
-
-      //  }
+        System.out.println("You're now in the ledger.");
+        int selecting;
+        System.out.println("1 - Display all Entries");
+        System.out.println("2 - Display all payments (Negative Entries)");
+        System.out.println("3 - Reports");
+        System.out.println("4 - Home");
 
 
-        String[] depositInfo = {dateStr, depositTime, depositDescription, depositVendor, String.valueOf(depositAmount)};
-        try {
-            BufferedWriter writer = new BufferedWriter(new FileWriter("transactions.csv"));
-            for (String depositInf : depositInfo) {
-                writer.write("\n" + depositInf);
+        selecting = in.nextInt();
+        while (selecting != 5) {
+            switch (selecting) {
+                case 1:
+                    displayEntries(ledgerSc);
+                    break;
+                case 2:
+                    displayPayments(ledgerSc);
+                    break;
+                case 3:
+                    reports(ledgerSc);
+                    break;
+                case 4:
+                    System.out.println("You're now in the ledger.");
+                    System.out.println("1 - Display all entries");
+                    System.out.println("2 - Display all payments (Negative Entries)");
+                    System.out.println("3 - Reports");
+                    System.out.println("4 - Home");
+                    selecting = in.nextInt();
+
+                    break;
+                case 5:
+                return;
+
             }
-            writer.close();
-        } catch (IOException e) {
-            throw new RuntimeException(e);
+
+
         }
+
+
+
     }
 
+    private static void displayPayments(ArrayList<HomeScreen> ledgerSc) {
 
-    private static void makePayment(ArrayList<Ledger> homeScreen) {
+
+
+    }
+
+    private static void displayEntries(ArrayList<HomeScreen> ledgerSc) {
+
+        try {
+            BufferedReader reader = new BufferedReader(new FileReader("transactions.csv"));
+            String line;
+            while((line = reader.readLine())!= null) {
+                System.out.println(line);
+            }
+            reader.close();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+    }
+
+    private static ArrayList<HomeScreen> ledgerScReports() {
+        return null;
+    }
+
+    private static void reports(ArrayList<HomeScreen> ledgerSc) {
+    }
+
+    public static void makePayment(ArrayList<HomeScreen> homeSc) {
         Scanner in = new Scanner(System.in);
 
 
@@ -111,7 +157,7 @@ public class AccountingLedgerApplication {
         double paymentAmount = in.nextDouble();
         System.out.println(paymentAmount);
         in.nextLine();
-        System.out.println("Enter the time the payment was made");
+        System.out.println("Enter the time the payment was made (hh:mm:ss)");
         String paymentTime = in.nextLine();
         System.out.println("Enter the description");
         String paymentDescription = in.nextLine();
@@ -120,16 +166,10 @@ public class AccountingLedgerApplication {
         System.out.println("Enter the date payment was made (mm/dd/yyyy)");
         String datePaymentStr = in.nextLine();
 
-        SimpleDateFormat sdf = new SimpleDateFormat();
-        try {
-            Date datePayment = sdf.parse(datePaymentStr);
-            System.out.println("input date: " + sdf.format(datePayment));
-        } catch (ParseException e) {
-            System.out.println("Invalid date format");
-        }
-        in.close();
 
-        String[] paymentInfo = {datePaymentStr, paymentTime, paymentDescription, paymentVendor, String.valueOf(paymentAmount)};
+
+
+        String[] paymentInfo = {datePaymentStr+"|"+paymentTime+"|"+paymentDescription+"|"+paymentVendor+"|"+String.valueOf(paymentAmount)};
         try {
             BufferedWriter writer = new BufferedWriter(new FileWriter("transactions.csv"));
             for (String paymentInf : paymentInfo) {
@@ -137,57 +177,49 @@ public class AccountingLedgerApplication {
             }
             writer.close();
         } catch (IOException e) {
-            throw new RuntimeException(e);
+            e.printStackTrace();
         }
 
+     homeScreen();
 
     }
 
-    private static void ledgers() {
-        Scanner in = new Scanner(System.in);
+    public static void addDeposit(ArrayList<HomeScreen> homeSc) {
+        System.out.println("How much would you like to deposit?");
+        double depositAmount = in.nextDouble();
 
-        ArrayList<Ledger> Ledger = reportScreenInfo();
+        System.out.println("Enter the date deposit was made (mm/dd/yyyy)");
+        String dateStr = in.next();
+        SimpleDateFormat sdf = new SimpleDateFormat();
+        in.nextLine();
+        System.out.println("Enter the time the deposit was made HH:MM:SS");
+        String depositTime = in.nextLine();
+        System.out.println("Enter the description");
+        String depositDescription = in.nextLine();
+        System.out.println("Enter the vendor");
+        String depositVendor = in.nextLine();
+        try {
+            Date date = sdf.parse(dateStr);
+            System.out.println("input date: " + sdf.format(date));
+        } catch (ParseException ignored) {
 
-        System.out.println("You're now in the ledger.");
-        int command;
-        System.out.println("1 - Deposits");
-        double addDeposit;
-        System.out.println("2 - Payments");
-        double makePayment;
-        System.out.println("3 - Reports");
-        System.out.println("4 - Home");
-
-
-        command = in.nextInt();
-        while (command != 5) {
-            switch (command) {
-                case 1:
-                    addDeposit(Ledger);
-                    break;
-                case 2:
-                    makePayment(Ledger);
-                    break;
-                case 3:
-                    ledgers();
-                    break;
-                case 4:
-                    System.out.println("You're now in the ledger.");
-                    System.out.println("1 - Deposits");
-                    System.out.println("2 - Payments");
-                    System.out.println("3 - Reports");
-                    System.out.println("4 - Home");
-                    command = in.nextInt();
-
-                    break;
-                case 5:
-                    return;
+        }
 
 
+        String[] depositInfo = {dateStr + "|" + depositTime + "|" + depositDescription + "|" + depositVendor + "|" + String.valueOf(depositAmount)};
+        try {
+            BufferedWriter writer = new BufferedWriter(new FileWriter("transactions.csv"));
+            for (String depositInf : depositInfo) {
+                writer.write("\n" + depositInf);
             }
-
-
+            writer.close();
+        } catch (IOException e) {
+            e.printStackTrace();
         }
-    }
-}
 
-    
+
+       homeScreen();
+    }
+
+
+}
