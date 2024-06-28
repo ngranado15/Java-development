@@ -1,2 +1,5 @@
-package com.pluralsight;public class RoomTest {
+package com.pluralsight;
+
+public class RoomTest {
+
 }
